@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #e0f7fa; /* Light Blue */
-            color: #000; /* Black */
+            color: black;
             margin: 0;
             padding: 0;
             text-align: center;
@@ -16,7 +16,9 @@
         header {
             background-color: #ff5252; /* Red */
             padding: 20px;
-            color: white;
+        }
+        header h1 {
+            margin: 0;
         }
         .search-container {
             margin: 40px auto;
@@ -37,19 +39,141 @@
             padding: 10px 20px;
             border: none;
             background-color: #ff5252; /* Red */
-            color: white;
+            color: black;
             border-radius: 4px;
             cursor: pointer;
+            font-weight: bold;
+        }
+        .search-container button:hover {
+            background-color: #e04848;
+        }
+        #results {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 600px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            display: none;
+        }
+        .category {
+            font-weight: bold;
+            color: black;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
+
     <header>
         <h1>Career Compass</h1>
     </header>
+
     <div class="search-container">
         <input type="text" id="jobInput" placeholder="Enter a job title...">
         <button onclick="searchJob()">Search</button>
     </div>
 
+    <div id="results"></div>
+
     <script>
+        const careerData = {
+            "mechanic": {
+                "highSchoolClasses": ["Auto Repair", "Physics", "Mathematics"],
+                "internships": ["Auto shop internships", "Technical apprenticeships"],
+                "scholarships": ["Automotive Technician Scholarships"],
+                "financialAid": ["FAFSA", "Technical School Grants"]
+            },
+            "nurse": {
+                "highSchoolClasses": ["Biology", "Chemistry", "Anatomy"],
+                "internships": ["Hospital volunteering", "Nursing assistant programs"],
+                "scholarships": ["Future Nurses Scholarship"],
+                "financialAid": ["FAFSA", "Medical Student Grants"]
+            },
+            "judge": {
+                "highSchoolClasses": ["Government", "Debate", "English"],
+                "internships": ["Law internships", "Court shadowing programs"],
+                "scholarships": ["Pre-Law Scholarships"],
+                "financialAid": ["FAFSA", "Law Student Grants"]
+            },
+            "police officer": {
+                "highSchoolClasses": ["Criminal Justice", "Psychology", "Physical Education"],
+                "internships": ["Police cadet programs", "Community service internships"],
+                "scholarships": ["Law Enforcement Scholarships"],
+                "financialAid": ["FAFSA", "Police Academy Assistance"]
+            },
+            "astronaut": {
+                "highSchoolClasses": ["Physics", "Mathematics", "Astronomy"],
+                "internships": ["NASA student internships", "Aerospace training programs"],
+                "scholarships": ["NASA STEM Scholarships"],
+                "financialAid": ["FAFSA", "Aerospace Engineering Grants"]
+            },
+            "firefighter": {
+                "highSchoolClasses": ["Emergency Response", "Chemistry", "Physical Education"],
+                "internships": ["Fire Department internships", "Rescue training"],
+                "scholarships": ["Firefighter Training Scholarships"],
+                "financialAid": ["FAFSA", "Public Safety Grants"]
+            },
+            "doctor": {
+                "highSchoolClasses": ["Biology", "Chemistry", "Physics", "Math"],
+                "internships": ["Hospital shadowing", "Medical research programs"],
+                "scholarships": ["Future Doctors Scholarship"],
+                "financialAid": ["FAFSA", "Health Sciences Financial Aid"]
+            },
+            "engineer": {
+                "highSchoolClasses": ["Calculus", "Physics", "Computer Science"],
+                "internships": ["Engineering summer camps", "STEM mentorships"],
+                "scholarships": ["National Engineering Scholarship"],
+                "financialAid": ["FAFSA", "STEM Grants"]
+            },
+            "teacher": {
+                "highSchoolClasses": ["Psychology", "English", "Public Speaking"],
+                "internships": ["Teaching assistant programs", "Tutoring internships"],
+                "scholarships": ["Future Educators Scholarship"],
+                "financialAid": ["FAFSA", "Education Grants"]
+            },
+            "pilot": {
+                "highSchoolClasses": ["Physics", "Mathematics", "Geography"],
+                "internships": ["Aviation training programs", "Flight school apprenticeships"],
+                "scholarships": ["Aviation Scholarships"],
+                "financialAid": ["FAFSA", "Flight School Grants"]
+            },
+            "soccer player": {
+                "highSchoolClasses": ["Physical Education", "Nutrition", "Sports Science"],
+                "internships": ["Soccer training camps", "Athletic development programs"],
+                "scholarships": ["Athletic Scholarships"],
+                "financialAid": ["FAFSA", "Sports Performance Grants"]
+            }
+            // You can continue adding more careers here...
+        };
+
+        function searchJob() {
+            let jobTitle = document.getElementById("jobInput").value.trim().toLowerCase();
+            let resultsDiv = document.getElementById("results");
+
+            if (careerData.hasOwnProperty(jobTitle)) {
+                let jobInfo = careerData[jobTitle];
+                resultsDiv.innerHTML = `
+                    <h2>Results for ${jobTitle.charAt(0).toUpperCase() + jobTitle.slice(1)}</h2>
+                    <p class="category">Best High School Classes:</p>
+                    <ul>${jobInfo.highSchoolClasses.map(cls => `<li>${cls}</li>`).join("")}</ul>
+                    
+                    <p class="category">Internships:</p>
+                    <ul>${jobInfo.internships.map(intern => `<li>${intern}</li>`).join("")}</ul>
+                    
+                    <p class="category">Scholarships:</p>
+                    <ul>${jobInfo.scholarships.map(scholar => `<li>${scholar}</li>`).join("")}</ul>
+                    
+                    <p class="category">Financial Aid:</p>
+                    <ul>${jobInfo.financialAid.map(aid => `<li>${aid}</li>`).join("")}</ul>
+                `;
+                resultsDiv.style.display = "block";
+            } else {
+                resultsDiv.innerHTML = "<p>No results found. Try another career.</p>";
+                resultsDiv.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>
